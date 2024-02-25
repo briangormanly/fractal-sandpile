@@ -7,7 +7,7 @@ from random import rand
 alias height: Int = 5
 alias width: Int = 5
 # Define the data type for the grid
-alias type = DType.int32
+alias type = DType.uint32
 
 # Define the total number of grains to add to the grid
 alias totalGrains: Int16 = 10
@@ -43,14 +43,35 @@ fn main() raises:
         localGrid[Index(2, 1)] = grid[Index(vCenter + 1, hCenter)]
         localGrid[Index(2, 2)] = grid[Index(vCenter + 1, hCenter + 1)]
 
+        print("localGrid : ", localGrid)
+
         # see if the center cell is >=2 higher then the surrounding cells
-        var lowestNeihbor = grid[Index(vCenter, hCenter)]
+        var lowestNeighborValue: UInt32 = grid[Index(vCenter, hCenter)]
+
+        # pass one through the neihbors will find the lowest value amoung them (it may repeat)
+        print("finding lowest neighbor value for ", i, " is ", lowestNeighborValue)
         for j in range(3):
             for k in range(3):
-                if localGrid[Index(j, k)] < lowestNeihbor:
-                    lowestNeihbor = localGrid[Index(i, j)]
+                let value = localGrid[Index(j, k)]
+                #print("localGrid[Index(", j ,",", k, ")] : ", value, " < lowestNeighbor : ", lowestNeighbor)
+                if value < lowestNeighborValue:
+                    #print("new lowest neighbor : ", value)
+                    lowestNeighborValue = value
         
-        #print("lowest neighbor : ", lowestNeihbor)
+        print("lowest neighbor 2 : ", lowestNeighborValue)
+
+        # pass 2 through the neighbors will find all the cells with the lowest value
+        # the value stored in the lowest neighbor is the decimal index of the 
+        var lowestNeighborLocations = Tensor[type](9)
+        for j in range(3):
+            for k in range(3):
+                let value = localGrid[Index(j, k)]
+                if value == lowestNeighborValue:
+                    print("lowest neighbor found at ", j, k)
+                    # add a grain to the cell
+                    grid[Index(vCenter - 1 + j, hCenter - 1 + k)] += 1
+                    # remove a grain from the center cell
+                    grid[Index(vCenter, hCenter)] -= 1
 
         # check each cell in the 'wave' heading out in all directions from the center
         # First check the center cell
