@@ -1,0 +1,24 @@
+from python import Python
+
+
+
+fn main() raises:
+    let np = Python.import_module("numpy")
+    let plt = Python.import_module("matplotlib.pyplot")
+    
+    # var numpy_array = np.zeros((100, 100), np.float64)
+
+    # for row in range(100):
+    #     for col in range(100):
+    #         numpy_array.itemset((col, row), 2.0)
+
+    
+    # plt.show()
+
+    var x = np.linspace(0, 2 * np.pi, 200)
+    var y = np.sin(x)
+
+    var fig = plt.subplots()
+    var ax = plt.subplots()
+    ax.plot(x, y)
+    plt.show()

@@ -1,0 +1,51 @@
+from python import Python
+from tensor import Tensor, TensorSpec, TensorShape
+from utils.index import Index
+from random import rand
+    
+# Define the grid size
+alias height: Int = 4
+alias width: Int = 4
+# Define the data type for the grid
+alias type = DType.int32
+
+# Define the total number of grains to add to the grid
+alias totalGrains: Int16 = 5
+
+# Create the grid as a 2D tensor
+# each cell will contain the value indicating the height of the cell
+
+
+fn main() raises:
+    # program start
+    print("Hello, Sandpile!")
+
+    var grid = Tensor[type](height, width)
+    #print(grid)
+
+    for i in range(totalGrains):
+        # mark the center
+        let vCenter = height / 2
+        let hCenter = width / 2
+
+        # add a grain of sand to the center of the grid
+        grid[Index(vCenter, hCenter)] += 1
+
+        # check each cell in the 'wave' heading out in all directions from the center
+        # First check the center cell
+        #let neighbors = Tensor[type](4, 2)
+        checkCell(grid[Index(vCenter, hCenter)], vCenter, hCenter) 
+
+
+
+        #print(grid[Index(2,2)])
+
+fn checkCell(value: Int32, y: SIMD[DType.float64], x: SIMD[DType.float64]) raises:
+    print(value, x)
+    
+    #print(tensor[x, y])
+
+fn addGrain():
+    print("Adding a grain to the grid")
+    #grid[2,2] += 1
+

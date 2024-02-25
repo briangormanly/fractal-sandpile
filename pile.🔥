@@ -1,0 +1,16 @@
+from tensor import Tensor
+from tensorShape import TensorShape
+
+struct Pile:
+    var width: Int16
+    var height: Int16
+    alias int_type = DType.float64
+
+    fn __init__(inout self, width: Int16, height: Int16):
+        self.width = width
+        self.height = height
+
+        let grid = Tensor[DType.int16](TensorShape(width, height), 1, 2, 3)
+    
+
+
